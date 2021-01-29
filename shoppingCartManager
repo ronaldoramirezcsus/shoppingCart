@@ -1,0 +1,160 @@
+import java.util.*;
+/**
+ * This class uses the ItemToPurchase and ShoppingCart class in order to create a program which acts like a shopping cart.
+ * 
+ * @author Ronaldo Ramirez
+ * @version October 11, 2020
+ */
+public class ShoppingCartManager{
+   private static String name;
+   private static String date;
+   private static ItemToPurchase newItem;
+   /**
+    * Main method asks for input to display it on the scree and it also creates a ShoppingCart object
+    * which is where all the items will be stored. Then it also prints a menu.
+    */
+   public static void main(String[] args){
+      Scanner kb = new Scanner(System.in);
+      System.out.print("Enter Customer's Name: ");
+      name = kb.nextLine();
+      System.out.println("Enter Today's Date:");
+      date = kb.nextLine();
+      System.out.println();
+      System.out.println("Customer Name: " + name);
+      System.out.println("Today's Date: " + date);
+      ShoppingCart c = new ShoppingCart(name,date);   //create a new shopping cart with the input as its paramters
+      printMenu(c); 
+   }
+   /**
+    * This method prints a menu and depending on the menu option that you choose it will 
+    * call the according method and make the neccesary changes.
+    *
+    * @param cart ShoppingCart object
+    */
+   public static void printMenu(ShoppingCart cart){
+      Scanner in = new Scanner(System.in);      
+      boolean run = true;
+      while(run){    
+         System.out.println();   
+         System.out.println("MENU");
+         System.out.println("a - Add item to cart");
+         System.out.println("d - Remove item from cart");
+         System.out.println("c - Change item quantity");
+         System.out.println("i - Output items' descriptions");
+         System.out.println("o - Output shopping cart");
+         System.out.println("q - Quit");
+         System.out.println();
+         System.out.println("Choose an option:");
+         String input = in.nextLine();
+         if(input.equals("q")){
+            run = false;
+         }
+         else if(input.equals("a")){
+            addItemToCart(cart);
+            run = true;
+         }
+         else if(input.equals("d")){
+            removeItemFromCart(cart);
+            run = true;
+         }
+         else if(input.equals("c")){
+            changeItemQuantity(cart);
+            run = true;
+         }
+         else if(input.equals("i")){
+            outputItemsDescriptions(cart);
+            run = true;
+         }
+         else if(input.equals("o")){
+            outputShoppingCart(cart);
+            run = true;
+         }
+         else{
+            System.out.println("Try again(input should be one of the letters in the menu)");
+         }
+      }
+      
+   }
+   /**
+    * This method prints the format that appears when you choose the add item option
+    * in the menu, it also adds a new Item to the cart
+    *
+    * @param cart ShoppingCart object
+    */
+   public static void addItemToCart(ShoppingCart cart){
+      Scanner item = new Scanner(System.in);
+      System.out.println("ADD ITEM TO CART");
+      System.out.println("Enter the item name:");
+      String name = item.nextLine();
+      System.out.print("Enter the item description: ");
+      String desc = item.nextLine();
+      System.out.println("Enter the item price:");
+      int price = item.nextInt();
+      System.out.print("Enter the item quantity: ");
+      int quantity = item.nextInt();
+      //create new ItemToPurchase with the input as its paramters
+      newItem = new ItemToPurchase(name,quantity,price,desc);
+      //call the addItem method in the ShoppingCart class and pass the newItem
+      cart.addItem(newItem);
+      
+   }
+   /**
+    * This method prints the format that appears when you choose the remove item
+    * option in the mune, it also removes the item you want from the shopping cart.
+    *
+    * @param cart ShoppingCart object
+    */
+   public static void removeItemFromCart(ShoppingCart cart){
+      Scanner remove = new Scanner(System.in);
+      System.out.println("REMOVE ITEM FROM CART");
+      System.out.print("Enter the name of item to remove: ");
+      String item = remove.nextLine();
+      //call the removeItem method in the ShoppingCart class and pass item
+      cart.removeItem(item);
+   }
+   /**
+    * This method prints the format that appears when you choose the modify quantity
+    * option in the menu, it also changes the items' quantity to whatever you choose
+    *
+    * @param cart ShoppingCart object
+    */
+   public static void changeItemQuantity(ShoppingCart cart){
+      Scanner item = new Scanner(System.in);
+      System.out.println("CHANGE ITEM QUANTITY");
+      System.out.print("Enter the item name: ");
+      String name = item.nextLine();
+      ItemToPurchase best = new ItemToPurchase();  //create new ItemToPurchase best
+      best = cart.find(name); //set best equal to the returned value 
+      System.out.println("Enter the new quantity: ");
+      int q = item.nextInt();
+      int p = best.getPrice();   //get price of the item you want to change
+      String desc = best.getDescription();   //get description of the item you want to change
+      ItemToPurchase veryNew = new ItemToPurchase(name,q,p,desc); //create a new ItemToPurhcase with the input as its parameters
+      //call modifyItem method from the ShoppingCart class and pass veryNew object
+      cart.modifyItem(veryNew);
+   }
+   /**
+    * This method prints the format that appear when you choose the output desciption
+    * option in the menu, it also prints each items description that is in the shopping cart.
+    *
+    * @param cart ShoppingCart object
+    */
+   public static void outputItemsDescriptions(ShoppingCart cart){
+      System.out.println("OUTPUT ITEMS' DESCRIPTIONS");
+      //call printDescirption from the ShoppingCart class
+      cart.printDescription();
+   }
+   /**
+    * This method prints the format that appears when you choose the output shopping
+    * cart option in the menu, it also prints the output of total of objetct within the shopping cart
+    *
+    * @param cart ShoppingCart object
+    */
+   public static void outputShoppingCart(ShoppingCart cart){
+      System.out.println("OUTPUT SHOPPING CART");
+      System.out.println();
+      //call printTotal from the ShoppingCart class
+      cart.printTotal();
+   }
+   
+}
