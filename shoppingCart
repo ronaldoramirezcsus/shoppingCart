@@ -1,0 +1,199 @@
+import java.util.*;
+/**
+ * This class represents a ShoppingCart
+ *
+ * @author Ronaldo Ramirez
+ * @version October 11, 2020
+ */
+public class ShoppingCart{
+   private String customerName;
+   private String currentDate;
+   private ItemToPurchase object = new ItemToPurchase();
+   private List<ItemToPurchase> cartItems = new ArrayList<ItemToPurchase>();
+   /**
+    * This is the default constructor that is called whenever no parameters are passed to a ShoppingCart object. 
+    * It sets the customerName to "none", and the currentDate to "January 1, 2020".
+    */
+   public ShoppingCart(){
+      this.customerName = "none";
+      this.currentDate = "January 1, 2020";
+   }
+   /**
+    * This is the constuctor that is called when you pass parameters to the ShoppingCart object.
+    * It sets the customerName and currentDate to whatever you passed in its' parameters.
+    *
+    * @param customerName name
+    * @param currentDate date
+    */
+   public ShoppingCart(String customerName, String currentDate){
+      this.customerName = customerName;
+      this.currentDate = currentDate;
+   }
+   /**
+    * This method returns customerName
+    *
+    * @return customerName
+    */
+   public String getCustomerName(){
+      return customerName;
+   }
+   /**
+    * This method returns currentDate
+    *
+    * @return currentDate
+    */
+   public String getDate(){
+      return currentDate;
+   }
+   /**
+    * This method adds an ItemToPurchase object at the end of the cartItems list
+    * 
+    * @param item ItemToPurchase object
+    */
+   public void addItem(ItemToPurchase item){
+      cartItems.add(item);
+   }
+   /**
+    * This method removes the desired ItemToPurchase from the cartItems list 
+    *
+    * @param itemName Name of the item you're looking to remove 
+    */
+   public void removeItem(String itemName){
+      int search = 0;
+      //loop through the cartItems array list
+      for(int i = 0; i < cartItems.size(); i++){
+         object = cartItems.get(i);
+         String name = object.getName();
+         //when the name of the object matches the given parameter name
+         if(name.equals(itemName)){
+            //we remove the item at that index
+            cartItems.remove(i);
+            search=0;
+         }  
+         else{
+            search++;
+         }
+      }
+      //if the loop reaches the end and it hasnt removed anything we display a message
+      if(search == cartItems.size()){
+         System.out.println("Item not found in cart. Nothing modified");
+      }
+   }
+   /**
+    * This method finds and returns the ItemToPurchase object with the name that you pass as the parameter.
+    * 
+    * @param itemName Name of the ItemToPurchase you want to be returned
+    * @return object This is the ItemToPurchase object you were looking for
+    */
+   public ItemToPurchase find(String itemName){
+      //loop through the cartItems array list
+      for(int i = 0; i < cartItems.size(); i++){
+         object = cartItems.get(i);
+         String name = object.getName();
+         //when the name of the object matches the given parameter name
+         if(name.equals(itemName)){
+            // we obtain the ItemToPurchase object at that index and return it
+            object = cartItems.get(i);
+            return object;
+         }  
+      }
+      return object;
+   }
+   /**
+    * This method modifies the itemQuantity of the ItemToPurchase you desire
+    *
+    * @param item ItemToPurchase object which you wish to modify
+    */
+   public void modifyItem(ItemToPurchase item){
+      int find = 0;
+      String in = item.getName(); 
+      int q = item.getQuantity();
+      //loop through the cartItems array list
+      for(int i = 0; i < cartItems.size(); i++){
+         object = cartItems.get(i);
+         String name = object.getName();
+         //when the name of the object matches the given parameter name
+         if(name.equals(in)){
+            //set the quantity of the item to the quantity of the item parameter
+            item.setQuantity(q);
+            //remove the item at the index
+            removeItem(in);
+            //add the item again to the correct spot
+            cartItems.add(i,item);
+            find = 0;
+         }
+         else{
+            find++;
+         }
+      }
+      if(find == cartItems.size()){
+         System.out.println("Item not found in cart. Nothing modified.");
+      }
+   }
+   /**
+    * This method returns the total amount of items in the cart
+    *
+    * @return count This is all the quantity of items in the cart
+    */
+   public int getNumItemsInCart(){
+      int count = 0;
+      //loop through array list
+      for(int i = 0; i < cartItems.size(); i++){
+         //set object to the item at a certain index
+         object = cartItems.get(i);
+         //set count to += the quantity of the just obtained object
+         count += object.getQuantity();
+      }  
+      return count;
+   }
+   /**
+    * This method returns the totalPrice of the shopping cart
+    *
+    * @return total This is the price of every single item added up
+    */
+   public int getCostOfCart(){
+      int total = 0; 
+      //loop through array list
+      for(int i = 0; i < cartItems.size(); i++){
+         //set object to the item at a certain index
+         object = cartItems.get(i);
+         //set total to the product of the just obtained object's price and quantity
+         total += object.getPrice()*object.getQuantity();
+      }
+      return total;
+   }
+   /**
+    * This method outputs the total of objects in the cart 
+    */
+   public void printTotal(){
+      System.out.println(getCustomerName() + "'s Shopping Cart - " + getDate());
+      System.out.println("Number of Items: " + getNumItemsInCart());
+      //if no items are in the array list display a special message
+      if(getNumItemsInCart() == 0){
+         System.out.println("SHOPPING CART IS EMPTY");
+      }
+      else{
+         //otherwise we print the item cost of every item in the array list
+         for(int i = 0; i < cartItems.size(); i++){
+            object = cartItems.get(i);
+            object.printItemCost();
+         }
+         //show the total amount of the whole cart
+         System.out.println("Total: $" + getCostOfCart());
+      }
+   }
+   /**
+    * This method outputs each items' description
+    */
+   public void printDescription(){
+      System.out.println(getCustomerName() + "'s Shopping Cart - " + getDate());
+      System.out.println();
+      System.out.println("Item Descriptions");
+      //prints the item description of every item in the cart
+      for(int i = 0; i < cartItems.size(); i++){
+         object = cartItems.get(i);
+         object.printItemDescription();
+      }
+   }
+   
+}
