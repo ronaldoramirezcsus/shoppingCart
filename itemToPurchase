@@ -1,0 +1,113 @@
+/**
+ * This class represents an ItemToPurchase
+ *
+ * @author Ronaldo Ramirez
+ * @version October 11, 2020
+ */
+public class ItemToPurchase { 
+   private String itemName;
+   private int itemPrice;
+   private int itemQuantity;
+   private String itemDescription;
+   
+   /**
+    * Default constructor which is called whenever you don't pass any parameters to the ItemToPurchase object.
+    * It sets the the integers to 0 and the strigns to "none".
+    */
+   public ItemToPurchase(){
+      this.itemName = "none";
+      this.itemQuantity = 0;
+      this.itemPrice = 0;
+      this.itemDescription = "none";
+   }
+   /**
+    * This constructor sets the parameters to whatever the values that you passed to the ItemToPurchase object.
+    *
+    * @param itemName sets the ItemToPurchase's name
+    * @param itemQuantity sets the ItemToPurchase's quantity
+    * @param itemPrice sets the ItemToPurchase's price
+    * @param itemDescription sets the ItemToPurchase's description
+    */
+   public ItemToPurchase(String itemName, int itemQuantity, int itemPrice, String itemDescription){
+      this.itemName = itemName;
+      this.itemQuantity = itemQuantity;
+      this.itemPrice = itemPrice;
+      this.itemDescription = itemDescription;
+   }
+   /**
+    * This method sets the itemName to whatever the parameter is
+    * 
+    * @param itemName sets the ItemName to whatever you choose
+    */
+   public void setName(String itemName){
+      this.itemName = itemName;
+   }
+   /**
+    * This method sets the itemPrice to whatever the parameter is
+    * 
+    * @param itemPrice sets the itemPrice to whatever you choose
+    */
+   public void setPrice(int itemPrice){
+      this.itemPrice = itemPrice;
+   }
+   /**
+    * This method sets the itemQuantity to whatever the parameter is
+    * 
+    * @param itemQuantity sets the itemQuantity to whatever you choose
+    */
+   public void setQuantity(int itemQuantity){
+      this.itemQuantity = itemQuantity;
+   }
+   /**
+    * This method sets the itemDescription to whatever the parameter is
+    * 
+    * @param itemDescription sets the itemDescription to whatever you choose
+    */
+   public void setDescription(String itemDescription){
+      this.itemDescription = itemDescription;
+   }
+   /**
+    * This method returns ItemName
+    *
+    * @return itemName
+    */
+   public String getName(){
+      return itemName;
+   }
+   /**
+    * This method return itemPrice
+    *
+    * @return itemPrice
+    */
+   public int getPrice(){
+      return itemPrice;
+   }
+   /**
+    * This method returns itemQuantity
+    *
+    * @return itemQuantity
+    */
+   public int getQuantity(){
+      return itemQuantity;
+   }
+   /**
+    * This method returns itemDescription
+    *
+    * @return itemDescription
+    */
+   public String getDescription(){
+      return itemDescription;
+   }
+   /**
+    * This method prints the cost of an item with a certain format 
+    */
+   public void printItemCost(){
+      System.out.println(getName() + " " + getQuantity() + " @ " + getPrice() + " = $" + getQuantity()*getPrice());
+   }
+   /**
+    * This method prints the items name and description
+    */
+   public void printItemDescription(){
+      System.out.println(getName() + ": " + getDescription());
+   }
+}
